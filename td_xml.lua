@@ -6,6 +6,7 @@ local xmlFile    = io.open("unit_tank.asc","r")
 
 local tmpFile    = io.open("hello.txt","w")
 local cnt = 0
+local fileName = nil 
 for line in xmlFile:lines() do 
 	local len    = string.len(line)
 
@@ -44,7 +45,7 @@ for line in xmlFile:lines() do
 				end
 				if e ~= nil then 
 					cnt = cnt +1
-					print("<key>image"..cnt..".png</key>")
+					print("<key>".. fileName..cnt..".png</key>")
 					print("<dict>")
 					print("<key>frame</key>")
 					print("<string>{{" .. b .. "," .. c .."},{" ..d.. "," .. e.. "}}</string>")
@@ -59,6 +60,14 @@ for line in xmlFile:lines() do
 					print("</dict>")
 				end 
 			end
+
+		else
+
+			local endPos=  string.find(line," ",6)
+			if endPos == nil then 
+				endPos=  string.find(line,".",6)
+			end
+			fileName = string.sub(line,6,endPos-1)
 		end
 	end 
 end
